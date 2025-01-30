@@ -5,8 +5,7 @@ from pathlib import Path
 def insert_pages(
         input_pdf: Path, 
         pages_to_insert: Path, 
-        position: int, 
-        output_pdf: Path
+        position: int
     ) -> None:
         """
         Insert pages from one PDF into another at a specified position.
@@ -41,6 +40,7 @@ def insert_pages(
                     writer.add_page(insert_page)
 
             # Write the resulting PDF to the output file
+            output_pdf = input_pdf.with_name(f"inserted_{input_pdf.name}")
             with open(output_pdf, 'wb') as output_file:
                 writer.write(output_file)
 

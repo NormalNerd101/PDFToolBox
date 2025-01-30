@@ -6,8 +6,7 @@ from PyPDF2 import PdfReader, PdfWriter, errors
 
 
 def merge_pdfs(
-    pdf_files: List[Path], 
-    out_pdf_path: Path
+    pdf_files: List[Path]
 ) -> bool:
     """
     Merge PDF files while preserving existing bookmarks.
@@ -57,6 +56,7 @@ def merge_pdfs(
                 continue
 
         # Ensure output directory exists
+        out_pdf_path = Path.cwd() / "merged_pdf.pdf"
         out_pdf_path.parent.mkdir(parents=True, exist_ok=True)
         
         # Write merged PDF to output

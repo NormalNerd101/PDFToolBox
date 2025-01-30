@@ -41,8 +41,7 @@ def get_bookmarks(bookmark_list: list, reader: PdfReader) -> dict:
 def insert_bookmarks(
         bookmark_names: List[str], 
         bookmark_page_nums: List[int], 
-        pdf_source_file: Path, 
-        out_pdf_file: Path
+        pdf_source_file: Path
     ) -> bool:
         """
         Insert bookmarks into a PDF file.
@@ -74,6 +73,7 @@ def insert_bookmarks(
                     writer.add_outline_item(bookmark_data[page_num], page_num)
                 writer.add_page(page)
             
+            out_pdf_file = pdf_source_file.with_name(f"{pdf_source_file.stem}_bookmarked.pdf")  
             with open(out_pdf_file, 'wb') as pdf_file:
                 writer.write(pdf_file)
             

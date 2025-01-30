@@ -7,7 +7,6 @@ from pathlib import Path
 
 def cut_pages(
         pdf_source_path: Path, 
-        output_pdf_path: Path,
         ranges: List[Tuple[int, int]]
     ) -> bool:
         """
@@ -38,6 +37,7 @@ def cut_pages(
                     writer.add_page(page)
 
             # Write the result to the output file
+            output_pdf_path = pdf_source_path.with_name("cut_" + pdf_source_path.name)
             with output_pdf_path.open("wb") as pdf_file:
                 writer.write(pdf_file)
 
