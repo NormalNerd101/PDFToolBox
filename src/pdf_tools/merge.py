@@ -56,7 +56,8 @@ def merge_pdfs(
                 continue
 
         # Ensure output directory exists
-        out_pdf_path = Path.cwd() / "merged_pdf.pdf"
+        directory = pdf_files[0].parent
+        out_pdf_path = directory / "merged_pdf_file.pdf"
         out_pdf_path.parent.mkdir(parents=True, exist_ok=True)
         
         # Write merged PDF to output
