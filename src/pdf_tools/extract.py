@@ -6,9 +6,9 @@ from pathlib import Path
 
 
 def cut_pages(
-        ranges: List[Tuple[int, int]], 
         pdf_source_path: Path, 
-        output_pdf_path: Path
+        output_pdf_path: Path,
+        ranges: List[Tuple[int, int]]
     ) -> bool:
         """
         Remove pages within specified ranges from a PDF.
