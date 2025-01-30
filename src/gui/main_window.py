@@ -1,12 +1,16 @@
 import sys
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget,
-    QTreeView, QSplitter, QFrame
+    QTreeView, QSplitter, QFrame, QPushButton
 )
 from PyQt6.QtGui import QFileSystemModel
 from PyQt6.QtCore import Qt
 
+# functions
+from dialogs import MergeDialog, SplitDialog
 
+
+# This class is currently not for use
 class OptionsPanel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -39,10 +43,38 @@ class SettingsPanel(QWidget):
 
     def initUI(self):
         setting_layout = QVBoxLayout()
+        setting_layout.setSpacing(0)
+
+        # Label
         setting_label = QLabel("Settings")
+        setting_label.setAlignment(Qt.AlignmentFlag.AlignTop)
+        setting_label.setStyleSheet("font-size: 20px; font-weight: bold;")
         setting_layout.addWidget(setting_label)
+
+        # Button
+        self.merge_btn = QPushButton("Merge PDFs")
+        self.split_btn = QPushButton("Split PDFs")
+
+        self.merge_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
+        self.split_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
+        self.merge_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.split_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+
+        setting_layout.addWidget(self.merge_btn, alignment=Qt.AlignmentFlag.AlignCenter)
+        setting_layout.addWidget(self.split_btn, alignment=Qt.AlignmentFlag.AlignCenter)
+        
+        self.merge_btn.clicked.connect(self.merge_pdf)
+        self.split_btn.clicked.connect(self.split_pdf)
+
         self.setLayout(setting_layout)
 
+    def merge_pdf(self):
+        dialog = MergeDialog()
+        dialog.exec()
+
+    def split_pdf(self):
+        dialog = SplitDialog()
+        dialog.exec()
 
 
 class MainWindow(QMainWindow):
@@ -50,28 +82,18 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("PDF Tools")
-        self.setGeometry(500, 300, 1000, 600)
+        self.setGeometry(1000, 200, 600, 600)
 
         # set up the central widget
         splitter = QSplitter(Qt.Orientation.Horizontal)
 
         # Set up Left panel for file explorer and right panel for settings
-        self.file_explorer = OptionsPanel()
+        # self.file_explorer = OptionsPanel()
         self.settings_panel = SettingsPanel()
 
-        splitter.addWidget(self.file_explorer)
+        # splitter.addWidget(self.file_explorer)
         splitter.addWidget(self.settings_panel)
 
         self.setCentralWidget(splitter)
 
 
-
-def main():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-
-    window.show()
-    sys.exit(app.exec())
-
-if __name__ == "__main__":
-    main()
