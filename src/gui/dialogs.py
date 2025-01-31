@@ -126,7 +126,7 @@ class SplitDialog(QDialog):
     
 
     def multi_split_catalog(self):
-        file, _ = QFileDialog.getOpenFileNames(self, "Select PDFs", "", "PDF Files (*.pdf)")
+        file, _ = QFileDialog.getOpenFileName(self, "Select PDFs", "", "PDF Files (*.pdf)")
         if file:
             file = Path(file)
             self.label.setText(f"Selected: {file}.")

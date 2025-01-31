@@ -65,11 +65,11 @@ def multiple_split(
             for page_num in range(start - 1, end):  
                 writer.add_page(reader.pages[page_num])
             
-            output_pdf_file = os.path.join(dir_path, f"{input_file.name}-{start}-{end}.pdf")
+            output_pdf_file = os.path.join(dir_path, f"{input_file.stem}-{start}-{end}.pdf")
             with open(output_pdf_file, 'wb') as pdf:
                 writer.write(pdf)
             print(f"Done splitting: {output_pdf_file}")
-            return True
+        return True
     
     except Exception as err:
         print(f"Error during splitting process: {err}")
