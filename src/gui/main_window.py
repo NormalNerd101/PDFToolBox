@@ -7,7 +7,7 @@ from PyQt6.QtGui import QFileSystemModel
 from PyQt6.QtCore import Qt
 
 # functions
-from dialogs import MergeDialog, SplitDialog
+from dialogs import MergeDialog, SplitDialog, CutDialog
 
 
 # This class is currently not for use
@@ -54,17 +54,22 @@ class SettingsPanel(QWidget):
         # Button
         self.merge_btn = QPushButton("Merge PDFs")
         self.split_btn = QPushButton("Split PDFs")
+        self.cut_btn = QPushButton("Cut PDFs")
 
         self.merge_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
         self.split_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
+        self.cut_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
         self.merge_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         self.split_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.cut_btn.setCursor(Qt.CursorShape.PointingHandCursor)
 
         setting_layout.addWidget(self.merge_btn, alignment=Qt.AlignmentFlag.AlignCenter)
         setting_layout.addWidget(self.split_btn, alignment=Qt.AlignmentFlag.AlignCenter)
+        setting_layout.addWidget(self.cut_btn, alignment=Qt.AlignmentFlag.AlignCenter)
         
         self.merge_btn.clicked.connect(self.merge_pdf)
         self.split_btn.clicked.connect(self.split_pdf)
+        self.cut_btn.clicked.connect(self.cut_pdf)
 
         self.setLayout(setting_layout)
 
@@ -74,6 +79,10 @@ class SettingsPanel(QWidget):
 
     def split_pdf(self):
         dialog = SplitDialog()
+        dialog.exec()
+    
+    def cut_pdf(self):
+        dialog = CutDialog()
         dialog.exec()
 
 

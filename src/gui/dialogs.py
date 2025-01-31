@@ -7,9 +7,7 @@ from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import pyqtSignal
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from pdf_tools.merge import merge_pdfs
-from pdf_tools.split import single_split, multiple_split
-
+from pdf_tools import single_split, multiple_split, merge_pdfs, cut_pages, insert_pages
 
 class MergeDialog(QDialog):
     def __init__(self, parent=None):
@@ -21,11 +19,9 @@ class MergeDialog(QDialog):
 
         self.label = QLabel("Select PDFs to merge")
         self.btn_select = QPushButton("Choose Files")
-        self.btn_merge = QPushButton("Merge")
-
+        self.btn_select.setStyleSheet("font-size: 16px; font-weight: bold; padding : 10px;")
         layout.addWidget(self.label)
         layout.addWidget(self.btn_select)
-        layout.addWidget(self.btn_merge)
 
         self.btn_select.clicked.connect(self.merge_pdfs_catalog)
 
@@ -146,3 +142,54 @@ class SplitDialog(QDialog):
                 QMessageBox.information(self, "Success", "PDFs split successfully!")
             else:
                 QMessageBox.warning(self, "Error", "Failed to split PDFs.")
+
+
+class CutDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Cut Pages")
+        self.setGeometry(800, 300, 300, 200)
+
+        layout = QVBoxLayout()
+
+        self.label = QLabel("Select PDF to cut pages")
+        layout.addWidget(self.label)
+
+        self.cut_btn = QPushButton("Cut Pages")
+        self.cut_btn.setStyleSheet("font-size: 16px; font-weight: bold; padding : 10px;")
+
+        layout.addWidget(QLabel("Ranges to cut (e.g : 1-2, 5-6, ...): "))
+        self.page_ranges = QLineEdit()
+        
+        self.cut_btn.clicked.connect(self.cut_pages_catalog)
+
+        layout.addWidget(self.page_ranges)
+        layout.addWidget(self.cut_btn)
+
+        self.setLayout(layout)
+
+    def cut_pages_catalog(self):
+        file, _ = QFileDialog.getOpenFileName(self, "Select PDF", "", "PDF Files (*.pdf)")
+        if file:
+            file = Path(file)
+            self.label.setText(f"Selected: {file}")
+            ranges = [tuple(map(int, r.split("-"))) for r in self.page_ranges.text().split(",")]
+            success = cut_pages(file, ranges)
+            if success:
+                QMessageBox.information(self, "Success", "PDFs cut successfully!")
+            else:
+                QMessageBox.warning(self, "Error", "Failed to cut PDFs.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+

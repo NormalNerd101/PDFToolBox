@@ -13,7 +13,6 @@ def merge_pdfs(
     
     Args:
         pdf_files (List[Path]): List of PDF files to merge
-        out_pdf_path (Path): Output path for merged PDF
     
     Returns:
         bool: True if merge successful, False otherwise

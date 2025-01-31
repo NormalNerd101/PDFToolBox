@@ -14,7 +14,6 @@ def insert_pages(
             input_pdf (Path): Original PDF file
             pages_to_insert (Path): PDF with pages to insert
             position (int): Page position to insert at (0-indexed)
-            output_pdf (Path): Output PDF file
         """
         try:
             # Read the original PDF and pages to insert

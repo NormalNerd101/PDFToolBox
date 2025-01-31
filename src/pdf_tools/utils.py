@@ -50,7 +50,6 @@ def insert_bookmarks(
             bookmark_names (List[str]): List of bookmark titles
             bookmark_page_nums (List[int]): Corresponding page numbers
             pdf_source_file (Path): Source PDF file
-            out_pdf_file (Path): Output PDF file
         
         Returns:
             bool: True if successful, False otherwise

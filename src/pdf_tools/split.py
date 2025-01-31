@@ -14,7 +14,6 @@ def single_split(
     
     Args:
         input_file (Path): Source PDF file
-        output_file (Path): Output PDF file
         start (int): Starting page number (1-indexed)
         end (int): Ending page number (1-indexed)
     """
@@ -49,7 +48,6 @@ def multiple_split(
     
     Args:
         input_file (Path): Source PDF file
-        output_prefix (str): Prefix for output filenames
         ranges (List[Tuple[int, int]]): List of page ranges to extract (1-indexed)
     """
     try:

@@ -13,9 +13,8 @@ def cut_pages(
         Remove pages within specified ranges from a PDF.
         
         Args:
-            ranges (List[Tuple[int, int]]): Page ranges to remove (1-indexed)
             pdf_source_path (Path): Source PDF file
-            output_pdf_path (Path): Output PDF file
+            ranges (List[Tuple[int, int]]): Page ranges to remove (1-indexed)
         
         Returns:
             bool: True if successful, False otherwise
