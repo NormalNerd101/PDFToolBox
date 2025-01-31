@@ -101,6 +101,16 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("PDF Tools")
         self.setGeometry(1000, 300, 500, 500)
+        self.setStyleSheet('background-color: #f3dcd6;')
+
+        # Set window icon (logo)
+        assets_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "../assets")
+        logo_path = os.path.join(assets_dir, "icon.jpg")  # Change filename if needed
+
+        if os.path.exists(logo_path):
+            self.setWindowIcon(QIcon(logo_path))
+        else:
+            print("Logo file not found. Please check the path.")
 
         # Set up the central widget
         splitter = QSplitter(Qt.Orientation.Horizontal)
