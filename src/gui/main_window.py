@@ -1,9 +1,9 @@
-import sys
+import os
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget,
     QTreeView, QSplitter, QFrame, QPushButton
 )
-from PyQt6.QtGui import QFileSystemModel
+from PyQt6.QtGui import QFileSystemModel, QPixmap, QIcon
 from PyQt6.QtCore import Qt
 
 # functions
@@ -102,16 +102,44 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("PDF Tools")
         self.setGeometry(1000, 300, 500, 500)
 
-        # set up the central widget
+        # Set up the central widget
         splitter = QSplitter(Qt.Orientation.Horizontal)
 
-        # Set up Left panel for file explorer and right panel for settings
-        # self.file_explorer = OptionsPanel()
+        # Left panel: Profile pic
+        self.profile_panel = self.create_profile_panel()
+        
+        # Right panel: Settings
         self.settings_panel = SettingsPanel()
 
-        # splitter.addWidget(self.file_explorer)
+        splitter.addWidget(self.profile_panel)
         splitter.addWidget(self.settings_panel)
 
         self.setCentralWidget(splitter)
 
+    def create_profile_panel(self):
+        """Creates a profile panel with a picture loaded from assets."""
+        panel = QWidget()
+        layout = QVBoxLayout()
 
+        # Path to profile picture in assets folder
+        assets_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "../assets")
+        profile_pic_path = os.path.join(assets_dir, "profile_pic.png")
+
+        # Profile picture
+        self.profile_pic = QLabel()
+        if os.path.exists(profile_pic_path):
+            pixmap = QPixmap(profile_pic_path)
+            new_width = int(pixmap.width() * 0.6)
+            new_height = int(pixmap.height() * 0.6)
+            pixmap = pixmap.scaled(new_width, new_height, Qt.AspectRatioMode.KeepAspectRatio)
+        else:
+            pixmap = QPixmap(100, 100)  # Create empty pixmap if file is missing
+            pixmap.fill(Qt.GlobalColor.gray)
+
+        self.profile_pic.setPixmap(pixmap)
+        self.profile_pic.setScaledContents(True)
+
+        layout.addWidget(self.profile_pic, alignment=Qt.AlignmentFlag.AlignCenter)
+        
+        panel.setLayout(layout)
+        return panel
