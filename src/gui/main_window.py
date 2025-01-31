@@ -1,4 +1,4 @@
-import os
+import os, sys
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget,
     QTreeView, QSplitter, QFrame, QPushButton
@@ -103,9 +103,13 @@ class MainWindow(QMainWindow):
         self.setGeometry(1000, 300, 500, 500)
         self.setStyleSheet('background-color: #f3dcd6;')
 
+        if getattr(sys, 'frozen', False):  # If running as .exe
+            self.assets_dir = os.path.join(sys._MEIPASS, '../../assets')
+        else:
+            self.assets_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "../assets")
+
         # Set window icon (logo)
-        assets_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "../assets")
-        logo_path = os.path.join(assets_dir, "icon.jpg")  # Change filename if needed
+        logo_path = os.path.join(self.assets_dir, "icon.jpg")  # Change filename if needed
 
         if os.path.exists(logo_path):
             self.setWindowIcon(QIcon(logo_path))
@@ -132,8 +136,7 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
 
         # Path to profile picture in assets folder
-        assets_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "../assets")
-        profile_pic_path = os.path.join(assets_dir, "profile_pic.png")
+        profile_pic_path = os.path.join(self.assets_dir, "profile_pic.png")
 
         # Profile picture
         self.profile_pic = QLabel()
