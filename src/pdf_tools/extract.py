@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 
-def cut_pages(
+def extract_pages(
         pdf_source_path: Path, 
         ranges: List[Tuple[int, int]]
     ) -> bool:
