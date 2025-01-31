@@ -1,4 +1,4 @@
 # PDFToolBox
-functions help to modify or work with pdf files with ease.
+Functions to help modify or work with PDF files with ease.
 
-Drive link [Google Drive link]([https://drive.google.com/your-link-here](https://drive.google.com/file/d/1MOXWMkbQ1mj5hWbYura90eCbRGzz7LaQ/view?usp=sharing) for download.
+Drive link: [Download .exe here](https://drive.google.com/file/d/1MOXWMkbQ1mj5hWbYura90eCbRGzz7LaQ/view?usp=sharing).
