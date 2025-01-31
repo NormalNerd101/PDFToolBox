@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import (
     QDialog, QVBoxLayout, QLabel, QPushButton, QFileDialog, QMessageBox, QStackedWidget, QWidget, QLineEdit
 )
 from PyQt6.QtGui import QIntValidator
+from PyQt6.QtCore import pyqtSignal
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from pdf_tools.merge import merge_pdfs
@@ -42,6 +43,15 @@ class MergeDialog(QDialog):
                 QMessageBox.warning(self, "Error", "Failed to merge PDFs.")
 
 
+class DoubleClickButton(QPushButton):
+    doubleClicked = pyqtSignal()  # Custom signal for double-click
+
+    def __init__(self, text):
+        super().__init__(text)
+
+    def mouseDoubleClickEvent(self, event):
+        self.doubleClicked.emit()  # Emit the double-click signal
+
 
 class SplitDialog(QDialog):
     def __init__(self, parent=None):
@@ -55,8 +65,8 @@ class SplitDialog(QDialog):
         layout.addWidget(self.label)
 
         # --- MODE SWITCH BUTTONS ---
-        self.single_split_btn = QPushButton("Single Split")
-        self.multiple_split_btn = QPushButton("Multiple Split")
+        self.single_split_btn = DoubleClickButton("Single Split")
+        self.multiple_split_btn = DoubleClickButton("Multiple Split")
 
         self.single_split_btn.clicked.connect(lambda: self.switch_mode(0))
         self.multiple_split_btn.clicked.connect(lambda: self.switch_mode(1))
@@ -89,8 +99,8 @@ class SplitDialog(QDialog):
     
 
         # --- ADD FUNCTIONS TO BUTTONS ---
-        self.single_split_btn.clicked.connect(self.single_split_catalog)
-        self.multiple_split_btn.clicked.connect(self.multi_split_catalog)
+        self.single_split_btn.doubleClicked.connect(self.single_split_catalog)
+        self.multiple_split_btn.doubleClicked.connect(self.multi_split_catalog)
 
         # --- STACKED WIDGET ---
         self.stacked_widget = QStackedWidget()
