@@ -223,15 +223,3 @@ class InsertDialog(QDialog):
                 QMessageBox.information(self, "Success", "Pages inserted successfully!")
             else:
                 QMessageBox.warning(self, "Error", "Failed to insert pages.")
-
-
-
-
-
-
-
-
-
-
-
-

@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("PDF Tools")
-        self.setGeometry(1000, 200, 600, 600)
+        self.setGeometry(1000, 300, 500, 500)
 
         # set up the central widget
         splitter = QSplitter(Qt.Orientation.Horizontal)
