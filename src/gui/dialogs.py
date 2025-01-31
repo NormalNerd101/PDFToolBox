@@ -57,7 +57,7 @@ class SplitDialog(QDialog):
 
         layout = QVBoxLayout()
 
-        self.label = QLabel("Select PDF(s) to split")
+        self.label = QLabel("Double-click to select PDF from the FE")
         layout.addWidget(self.label)
 
         # --- MODE SWITCH BUTTONS ---
@@ -155,7 +155,7 @@ class CutDialog(QDialog):
         self.label = QLabel("Select PDF to cut pages")
         layout.addWidget(self.label)
 
-        self.cut_btn = QPushButton("Cut Pages")
+        self.cut_btn = QPushButton("Choose File")
         self.cut_btn.setStyleSheet("font-size: 16px; font-weight: bold; padding : 10px;")
 
         layout.addWidget(QLabel("Ranges to cut (e.g : 1-2, 5-6, ...): "))
