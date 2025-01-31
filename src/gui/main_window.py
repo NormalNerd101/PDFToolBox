@@ -7,7 +7,7 @@ from PyQt6.QtGui import QFileSystemModel, QPixmap, QIcon
 from PyQt6.QtCore import Qt
 
 # functions
-from dialogs import MergeDialog, SplitDialog, ExtractDialog, InsertDialog
+from .dialogs import MergeDialog, SplitDialog, ExtractDialog, InsertDialog
 
 
 # This class is currently not for use
