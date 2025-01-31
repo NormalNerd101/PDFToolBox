@@ -181,6 +181,48 @@ class CutDialog(QDialog):
                 QMessageBox.warning(self, "Error", "Failed to cut PDFs.")
 
 
+class InsertDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Insert Pages")
+        self.setGeometry(800, 300, 300, 200)
+
+        layout = QVBoxLayout()
+
+        self.label = QLabel("After enter the page number to start inserting. clicked 'Insert Pages', then choose the source file and the source pages.")
+        layout.addWidget(self.label)
+
+        layout.addWidget(QLabel("Insert from page number (0-indexed) : "))
+        self.insertPageNumber = QLineEdit()
+        self.insertPageNumber.setValidator(QIntValidator(1, 10000))
+
+        self.insert_btn = QPushButton("Insert Pages")
+        self.insert_btn.setStyleSheet("font-size: 15px; font-weight: bold; padding : 5px;")
+
+        self.insert_btn.clicked.connect(self.insert_catalog)
+
+        layout.addWidget(self.insertPageNumber)
+        layout.addWidget(self.insert_btn)
+
+        self.setLayout(layout)
+
+    def select_catalog(self):
+        file, _ = QFileDialog.getOpenFileName(self, "SELECT PDF", "", "PDF Files (*.pdf)")
+        if file:
+            return Path(file)
+        return None
+
+    def insert_catalog(self):
+        source_file = self.select_catalog()
+        source_pages = self.select_catalog()
+        
+        if source_file and source_pages:
+            insert_page = int(self.insertPageNumber.text())
+            success = insert_pages(source_file, source_pages, insert_page)
+            if success:
+                QMessageBox.information(self, "Success", "Pages inserted successfully!")
+            else:
+                QMessageBox.warning(self, "Error", "Failed to insert pages.")
 
 
 

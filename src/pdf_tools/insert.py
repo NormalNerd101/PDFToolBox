@@ -39,11 +39,11 @@ def insert_pages(
                     writer.add_page(insert_page)
 
             # Write the resulting PDF to the output file
-            output_pdf = input_pdf.with_name(f"inserted_{input_pdf.name}")
+            output_pdf = input_pdf.with_name(f"Inserted_PageNum-{position+1}_{input_pdf.stem}.pdf")
             with open(output_pdf, 'wb') as output_file:
                 writer.write(output_file)
 
-            print(f"Pages inserted successfully. Output saved to {output_pdf}")
-        
+            return True
         except Exception as e:
             print(f"An error occurred: {e}")
+            return False

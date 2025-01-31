@@ -7,7 +7,7 @@ from PyQt6.QtGui import QFileSystemModel
 from PyQt6.QtCore import Qt
 
 # functions
-from dialogs import MergeDialog, SplitDialog, CutDialog
+from dialogs import MergeDialog, SplitDialog, CutDialog, InsertDialog
 
 
 # This class is currently not for use
@@ -55,21 +55,26 @@ class SettingsPanel(QWidget):
         self.merge_btn = QPushButton("Merge PDFs")
         self.split_btn = QPushButton("Split PDFs")
         self.cut_btn = QPushButton("Cut PDFs")
+        self.insert_btn = QPushButton("Insert Pages")
 
         self.merge_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
         self.split_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
         self.cut_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
+        self.insert_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
         self.merge_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         self.split_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         self.cut_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.insert_btn.setCursor(Qt.CursorShape.PointingHandCursor)
 
         setting_layout.addWidget(self.merge_btn, alignment=Qt.AlignmentFlag.AlignCenter)
         setting_layout.addWidget(self.split_btn, alignment=Qt.AlignmentFlag.AlignCenter)
         setting_layout.addWidget(self.cut_btn, alignment=Qt.AlignmentFlag.AlignCenter)
+        setting_layout.addWidget(self.insert_btn, alignment=Qt.AlignmentFlag.AlignCenter)
         
         self.merge_btn.clicked.connect(self.merge_pdf)
         self.split_btn.clicked.connect(self.split_pdf)
         self.cut_btn.clicked.connect(self.cut_pdf)
+        self.insert_btn.clicked.connect(self.insert_pdf)
 
         self.setLayout(setting_layout)
 
@@ -83,6 +88,10 @@ class SettingsPanel(QWidget):
     
     def cut_pdf(self):
         dialog = CutDialog()
+        dialog.exec()
+    
+    def insert_pdf(self):
+        dialog = InsertDialog()
         dialog.exec()
 
 
