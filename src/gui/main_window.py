@@ -103,7 +103,13 @@ class MainWindow(QMainWindow):
         self.setGeometry(1000, 300, 500, 500)
         self.setStyleSheet('background-color: #f3dcd6;')
 
-        self.assets_dir = os.path.join(sys._MEIPASS, '../../assets')
+        if getattr(sys, 'frozen', False):  # If running as an executable
+            BASE_DIR = sys._MEIPASS
+        else:  # If running as a script
+            BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../")
+
+        # Path to assets
+        self.assets_dir = os.path.join(BASE_DIR, "assets")
 
         # Set window icon (logo)
         logo_path = os.path.join(self.assets_dir, "icon.jpg")  # Change filename if needed
@@ -111,6 +117,7 @@ class MainWindow(QMainWindow):
         if os.path.exists(logo_path):
             self.setWindowIcon(QIcon(logo_path))
         else:
+            print("Path : ", logo_path)
             print("Logo file not found. Please check the path.")
 
         # Set up the central widget
