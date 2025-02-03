@@ -103,10 +103,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(1000, 300, 500, 500)
         self.setStyleSheet('background-color: #f3dcd6;')
 
-        if getattr(sys, 'frozen', False):  # If running as .exe
-            self.assets_dir = os.path.join(sys._MEIPASS, '../../assets')
-        else:
-            self.assets_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "../assets")
+        self.assets_dir = os.path.join(sys._MEIPASS, '../../assets')
 
         # Set window icon (logo)
         logo_path = os.path.join(self.assets_dir, "icon.jpg")  # Change filename if needed
