@@ -37,8 +37,9 @@ class OptionsPanel(QWidget):
 
 
 class SettingsPanel(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, filepath=None):
         super().__init__(parent)
+        self.filepath = filepath
         self.initUI()
 
     def initUI(self):
@@ -46,7 +47,7 @@ class SettingsPanel(QWidget):
         setting_layout.setSpacing(0)
 
         # Label
-        setting_label = QLabel("Settings")
+        setting_label = QLabel("Features")
         setting_label.setAlignment(Qt.AlignmentFlag.AlignTop)
         setting_label.setStyleSheet("font-size: 20px; font-weight: bold;")
         setting_layout.addWidget(setting_label)
@@ -54,7 +55,7 @@ class SettingsPanel(QWidget):
         # Button
         self.merge_btn = QPushButton("Merge PDFs")
         self.split_btn = QPushButton("Split PDFs")
-        self.extract_btn = QPushButton("Extract PDFs")
+        self.extract_btn = QPushButton("Cut PDFs")
         self.insert_btn = QPushButton("Insert Pages")
 
         self.merge_btn.setStyleSheet("font-size: 20px; font-weight: bold; padding: 15px; border: 2px solid black;")
@@ -83,11 +84,11 @@ class SettingsPanel(QWidget):
         dialog.exec()
 
     def split_pdf(self):
-        dialog = SplitDialog()
+        dialog = SplitDialog(parent=self, filepath=self.filepath)
         dialog.exec()
     
     def extract_pdf(self):
-        dialog = ExtractDialog()
+        dialog = ExtractDialog(parent=self, filepath=self.filepath)
         dialog.exec()
     
     def insert_pdf(self):
@@ -96,8 +97,9 @@ class SettingsPanel(QWidget):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, filepath=None):
         super().__init__()
+        self.filepath = filepath
 
         self.setWindowTitle("PDF Tools")
         self.setGeometry(1000, 300, 500, 500)
@@ -127,7 +129,7 @@ class MainWindow(QMainWindow):
         self.profile_panel = self.create_profile_panel()
         
         # Right panel: Settings
-        self.settings_panel = SettingsPanel()
+        self.settings_panel = SettingsPanel(parent=self, filepath=filepath)
 
         splitter.addWidget(self.profile_panel)
         splitter.addWidget(self.settings_panel)

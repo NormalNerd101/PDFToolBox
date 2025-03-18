@@ -50,10 +50,11 @@ class DoubleClickButton(QPushButton):
 
 
 class SplitDialog(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, filepath=None):
         super().__init__(parent)
         self.setWindowTitle("Split PDF")
         self.setGeometry(800, 300, 300, 200)
+        self.filepath = filepath
 
         layout = QVBoxLayout()
 
@@ -95,8 +96,13 @@ class SplitDialog(QDialog):
     
 
         # --- ADD FUNCTIONS TO BUTTONS ---
-        self.single_split_btn.doubleClicked.connect(self.single_split_catalog)
-        self.multiple_split_btn.doubleClicked.connect(self.multi_split_catalog)
+        if self.filepath:
+            self.label.setText(f"Selected: {self.filepath}")
+            self.single_split_btn.doubleClicked.connect(self.single_split_catalog)
+            self.multiple_split_btn.doubleClicked.connect(self.multi_split_catalog)
+        else:
+            self.single_split_btn.doubleClicked.connect(self.single_split_catalog)
+            self.multiple_split_btn.doubleClicked.connect(self.multi_split_catalog)
 
         # --- STACKED WIDGET ---
         self.stacked_widget = QStackedWidget()
@@ -118,7 +124,10 @@ class SplitDialog(QDialog):
 
 
     def single_split_catalog(self):
-        file, _ = QFileDialog.getOpenFileName(self, "Select PDF", "", "PDF Files (*.pdf)")
+        if self.filepath:
+            file = self.filepath
+        else:
+            file, _ = QFileDialog.getOpenFileName(self, "Select PDF", "", "PDF Files (*.pdf)")
         if file:
             file = Path(file)
             self.label.setText(f"Selected: {file}")
@@ -132,7 +141,10 @@ class SplitDialog(QDialog):
     
 
     def multi_split_catalog(self):
-        file, _ = QFileDialog.getOpenFileName(self, "Select PDFs", "", "PDF Files (*.pdf)")
+        if self.filepath:
+            file = self.filepath
+        else:
+            file, _ = QFileDialog.getOpenFileName(self, "Select PDFs", "", "PDF Files (*.pdf)")
         if file:
             file = Path(file)
             self.label.setText(f"Selected: {file}.")
@@ -145,23 +157,27 @@ class SplitDialog(QDialog):
 
 
 class ExtractDialog(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, filepath=None):
         super().__init__(parent)
+        self.filepath = filepath
         self.setWindowTitle("Cut Pages")
         self.setGeometry(800, 300, 300, 200)
 
         layout = QVBoxLayout()
 
-        self.label = QLabel("Select PDF to extract pages")
+        self.label = QLabel("Select PDF to cut pages")
         layout.addWidget(self.label)
 
-        self.extract_btn = QPushButton("Choose File")
+        self.extract_btn = QPushButton("Choose File/Cut Pages")
         self.extract_btn.setStyleSheet("font-size: 16px; font-weight: bold; padding : 10px;")
 
         layout.addWidget(QLabel("Ranges to cut (e.g : 1-2, 5-6, ...): "))
         self.page_ranges = QLineEdit()
         
-        self.extract_btn.clicked.connect(self.extract_pages_catalog)
+        if self.filepath:
+            self.extract_btn.clicked.connect(self.extract_pages_catalog)
+        else:
+            self.extract_btn.clicked.connect(self.extract_pages_catalog)
 
         layout.addWidget(self.page_ranges)
         layout.addWidget(self.extract_btn)
@@ -169,7 +185,10 @@ class ExtractDialog(QDialog):
         self.setLayout(layout)
 
     def extract_pages_catalog(self):
-        file, _ = QFileDialog.getOpenFileName(self, "Select PDF", "", "PDF Files (*.pdf)")
+        if self.filepath:
+            file = self.filepath
+        else:
+            file, _ = QFileDialog.getOpenFileName(self, "Select PDF", "", "PDF Files (*.pdf)")
         if file:
             file = Path(file)
             self.label.setText(f"Selected: {file}")
