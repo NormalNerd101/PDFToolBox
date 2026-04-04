@@ -44,11 +44,6 @@ To remove it:
 PDFToolBox.exe --unregister
 ```
 
-## Assets
-
-Place `assets/icon.ico` and `assets/profile_pic.png` next to the EXE (or in
-the project's `assets/` folder — they are copied automatically on build).
-
 ## Feature mapping from Python
 
 | Python (PyPDF2 / PyQt6)   | C# (PdfSharp / WinForms)         |
