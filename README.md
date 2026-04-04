@@ -9,7 +9,7 @@ WinForms/.NET 8 rewrite of the original PyQt6 Python tool.
 ## Dependencies (auto-restored via NuGet)
 - `PDFsharp` 6.1.1
 
-## Build & Run
+## Build & Run (PowerShell)
 
 ```bash
 dotnet restore
