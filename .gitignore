@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+bin/
+obj/
 
 # IDEs, editors and project files
 .vs/
